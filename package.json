@@ -1,32 +1,34 @@
 {
-  "name": "repospark",
-  "version": "1.0.0",
-  "description": "An interactive GitHub repository polish planner for better READMEs, launches, and star growth.",
-  "private": true,
-  "type": "module",
+  "version": "2.4.2",
+  "name": "spooty",
+  "workspaces": [
+    "src/backend",
+    "src/frontend"
+  ],
   "scripts": {
-    "dev": "vite --host 127.0.0.1",
-    "build": "vite build",
-    "preview": "vite preview --host 127.0.0.1"
-  },
-  "dependencies": {
-    "@vitejs/plugin-react": "^5.0.0",
-    "lucide-react": "^0.468.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "typescript": "^5.8.0",
-    "vite": "^7.0.0"
+    "start:be": "npm run start:dev -w backend",
+    "start:fe": "npm run start -w frontend",
+    "build:be": "npm run build -w backend",
+    "build:fe": "npm run build -w frontend",
+    "build": "npm run build:be && npm run build:fe",
+    "gen:fe": "npm run gen -w frontend",
+    "gen:be": "npm run gen -w backend",
+    "start": "npm run start:prod -w backend",
+    "clean": "rimraf dist",
+    "changelog": "auto-changelog -p",
+    "release": "release-it",
+    "commit": "cz",
+    "check:lib": "npm-check-updates -w backend -f ytdlp-nodejs -u"
   },
   "devDependencies": {
-    "playwright": "^1.59.1"
-  },
-  "keywords": [
-    "github",
-    "readme",
-    "open-source",
-    "developer-tools",
-    "repo-growth",
-    "react",
-    "vite"
-  ]
+    "@release-it/bumper": "^7.0.1",
+    "auto-changelog": "^2.5.0",
+    "commitizen": "^4.3.1",
+    "copy-files-from-to": "^3.2.2",
+    "cz-conventional-changelog": "^3.3.0",
+    "npm-check-updates": "^17.1.15",
+    "release-it": "^18.1.2",
+    "release-it-docker-plugin": "^2.0.0",
+    "rimraf": "^6.0.1"
+  }
 }

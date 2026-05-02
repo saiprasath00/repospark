@@ -1,6 +1,10 @@
-node_modules/
-dist/
-.env
-.env.*
-npm-debug.log*
-*.local
+/node_modules
+/dist
+/.idea
+**/*.sqlite
+.agents/
+.claude/
+.codex/
+_incoming_spooty/
+# Local Netlify folder
+.netlify
