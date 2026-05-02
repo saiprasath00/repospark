@@ -10,6 +10,7 @@
     "start:fe": "npm run start -w frontend",
     "build:be": "npm run build -w backend",
     "build:fe": "npm run build -w frontend",
+    "build:mobile": "npm run build -w frontend -- --base-href=./",
     "build": "npm run build:be && npm run build:fe",
     "gen:fe": "npm run gen -w frontend",
     "gen:be": "npm run gen -w backend",

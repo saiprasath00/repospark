@@ -1,0 +1,60 @@
+plugins {
+    id 'com.android.application'
+}
+
+def webRoot = file('../../dist/frontend/browser')
+def webAssets = file('src/main/assets/public')
+
+tasks.register('buildWebApp', Exec) {
+    workingDir file('../..')
+    if (System.getProperty('os.name').toLowerCase().contains('windows')) {
+        commandLine 'cmd', '/c', 'npm run build:mobile'
+    } else {
+        commandLine 'npm', 'run', 'build:mobile'
+    }
+}
+
+tasks.register('syncWebAssets', Sync) {
+    dependsOn tasks.named('buildWebApp')
+    from webRoot
+    into webAssets
+}
+
+android {
+    namespace 'com.saiprasath.spooty'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.saiprasath.spooty'
+        minSdk 23
+        targetSdk 35
+        versionCode 242
+        versionName '2.4.2'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'armeabi-v7a', 'arm64-v8a'
+            universalApk false
+        }
+    }
+
+    applicationVariants.configureEach { variant ->
+        variant.mergeAssetsProvider.configure {
+            dependsOn tasks.named('syncWebAssets')
+        }
+        variant.outputs.configureEach { output ->
+            def abi = output.getFilter(com.android.build.OutputFile.ABI)
+            if (abi != null) {
+                outputFileName = "Spooty-v${defaultConfig.versionName}-${abi}-debug.apk"
+            }
+        }
+    }
+}
