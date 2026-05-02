@@ -4,6 +4,8 @@ android/.gradle/
 android/build/
 android/app/build/
 android/app/src/main/assets/public/
+android/*.png
+android/window.xml
 /.idea
 **/*.sqlite
 .agents/
